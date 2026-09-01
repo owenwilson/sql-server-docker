@@ -27,3 +27,5 @@ docker compose -f sql-server-local.yml up -d
 ```
 
 ## references
+
+- check out [azure sql edge](https://hub.docker.com/r/microsoft/azure-sql-edge)
