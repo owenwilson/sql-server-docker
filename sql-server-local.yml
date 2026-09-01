@@ -1,0 +1,14 @@
+services:
+  azure-sql-edge:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: sql-server-local
+    environment:
+      - ACCEPT_EULA=1
+      - MSSQL_SA_PASSWORD=sample@!2
+      - MSSQL_PID=Developer
+      - MSSQL_USER=SA
+    networks:
+      - network-sql-server
+        
+networks:
+  network-sql-server:
