@@ -15,7 +15,7 @@ docker run \
 --name=sql-server-local \
 --rm \
 -e 'ACCEPT_EULA=1' \
--e 'MYSQL_SA_PASSWORD=sample@!2' \
+-e 'MSSQL_SA_PASSWORD=sample@!2' \
 -e 'MSSQL_PID=Developer' \
 -e 'MSSQL_USER=SA' mcr.microsoft.com/azure-sql-edge:latest
 ```
