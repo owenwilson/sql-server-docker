@@ -1,6 +1,14 @@
 trigger:
   - main
 
+parameters:
+  - name: projectNamesConfigurations
+    type: object
+    default:
+      - projectName: 'project-sql-server-azure'
+        projectExtension: '.sqlproj'
+        buildArguments: '/p:NetCoreBuild=true'
+
 pool:
   vmImage: ubuntu-latest
 
