@@ -7,8 +7,20 @@ services:
       - MSSQL_SA_PASSWORD=sample@!2
       - MSSQL_PID=Developer
       - MSSQL_USER=SA
+    ports:
+      - 1433:1433
     networks:
       - network-sql-server
-        
+
+  dozzle-logs:
+    image: amir20/dozzle:latest
+    container_name: dozzle-logs
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+    networks:
+    - network-sql-server
+
 networks:
   network-sql-server:
