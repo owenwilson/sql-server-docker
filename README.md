@@ -26,6 +26,14 @@ docker run \
 docker compose -f sql-server-local.yml up -d
 ```
 
+- vscode plugin sql-server
+
+![plugin sql-server for vscode](./images/image-sql-server-plugin.png)
+
+- example connection
+
+![example connection sql server](./images/image-sql-server-connection.png)
+ 
 ## references
 
 - check out [azure sql edge](https://hub.docker.com/r/microsoft/azure-sql-edge)
