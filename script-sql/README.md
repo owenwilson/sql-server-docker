@@ -18,6 +18,10 @@
 
 <img src="../images/image-default-build-configuration-for-this-folder.png" width="600">
 
+- example update sql project
+
+<img src="../images/image-update-and-compare-sqlproj.png" width="600">
+
 ## references
 
 - check out [sql database projects](https://learn.microsoft.com/ga-ie/sql/tools/visual-studio-code-extensions/sql-database-projects/getting-started-sql-database-projects-extension?view=sql-server-ver17#1)

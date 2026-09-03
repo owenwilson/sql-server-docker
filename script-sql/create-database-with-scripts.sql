@@ -11,7 +11,7 @@ CREATE TABLE Users (
 );
 GO
 
-CREATE TABLE FacebookAccount (
+CREATE TABLE FacebookAccounts (
     FacebookID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
     FacebookAccountID NVARCHAR(100) NOT NULL,
