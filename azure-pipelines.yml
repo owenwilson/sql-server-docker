@@ -19,7 +19,7 @@ variables:
     value: '$(Build.SourcesDirectory)/project-sql-server-azure/bin/$(buildConf)'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 stages:
   - stage: SQLServerBuild
