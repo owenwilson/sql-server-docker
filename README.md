@@ -1,8 +1,8 @@
 # sql-server-docker
 
-## run sql-server from azure edge
+## run sql-server
 
--  download docker sql-server image
+- download docker sql-server image
 
 ```sh
 docker pull mcr.microsoft.com/azure-sql-edge:latest
@@ -28,12 +28,19 @@ docker compose -f sql-server-local.yml up -d
 
 - vscode plugin sql-server
 
-![plugin sql-server for vscode](./images/image-sql-server-plugin.png)
+<img src="./images/image-sql-server-plugin.png" width="600">
 
 - example connection
 
-![example connection sql server](./images/image-sql-server-connection.png)
- 
+<img src="./images/image-sql-server-connection.png" width="600">
+
+## azure devops
+
+- check pipeline and deploy
+
+![ci-cd azure devops](./images/image-azure-devops-ci-cd.png)
+![ci-cd deploy dacpac file](./images/image-deploy-dacpac-success.png)
+
 ## references
 
 - check out [azure sql edge](https://hub.docker.com/r/microsoft/azure-sql-edge)
