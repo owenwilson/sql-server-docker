@@ -9,14 +9,76 @@ parameters:
         projectExtension: '.sqlproj'
         buildArguments: '/p:NetCoreBuild=true'
 
+variables:
+  - group: groupAzureSqlSecrets
+  - name: solution
+    value: '$(Build.SourcesDirectory)/project-sql-server-azure/project-sql-server-azure.sqlproj'
+  - name: buildConf
+    value: 'Release'
+  - name: outputPath
+    value: '$(Build.SourcesDirectory)/project-sql-server-azure/bin/$(buildConf)'
+
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+  - stage: SQLServerBuild
+    displayName: 'Stage: Sql Server Database Build'
+    jobs:
+      - job: Build
+        displayName: 'Job: Build publish Sql Database'
+        steps:
+          # install sdk dotnet v8
+          - task: UseDotNet@2
+            displayName: 'Step: Use/Intall .net SDK 8.0.424'
+            inputs:
+              packageType: 'sdk'
+              version: '8.0.424'
+          
+          # build dacpac
+          - task: DotNetCoreCLI@2
+            displayName: 'Step: Build .dacpac for SQL Project'
+            inputs:
+              command: build
+              projects: '$(solution)'
+              arguments: '--configuration $(buildConf) /p:NetCoreBuild=true /p:OutputPath=$(outputPath)'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+          # publish dacpac file
+          - task: PublishPipelineArtifact@1
+            displayName: 'Step: Publish Pipeline Artifact Sql Server Database'
+            inputs:
+              targetPath: '$(outputPath)'
+              artifact: drop
+
+  - stage: DeployToAzure
+    displayName: 'Stage: Deploy .dacpac to azure Database'
+    dependsOn: SQLServerBuild
+    condition: succeeded()
+    jobs:
+      - job: Deploy
+        steps:
+          # download dacpac file
+          - task: DownloadBuildArtifacts@1
+            displayName: 'Step: Download artifact sql-server-dacpac(drop)'
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: '$(System.DefaultWorkingDirectory)/drop'
+
+          # deploy dacpac file to azure cloud
+          - task: SqlAzureDacpacDeployment@1
+            displayName: 'Step: Deploy to azure database'
+            inputs:
+              azureSubscription: 'azcloud'
+              AuthenticationType: 'server'
+              ServerName: 'database-sql-server-ci-cd.database.windows.net'
+              DatabaseName: 'sql-ci-cd'
+              SqlUsername: '$(userAdminSqlAzure)'
+              SqlPassword: '$(userPassSqlAzure)'
+              deployType: 'DacpacTask'
+              DeploymentAction: 'Publish'
+              IpDetectionMethod: 'AutoDetect'
+              DacpacFile: '$(Agent.BuildDirectory)/**/*.dacpac'
+              AdditionalArguments: ''
+              DeleteFirewallRule: True
