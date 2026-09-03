@@ -1,5 +1,7 @@
 # sql-server-docker
 
+- configure docker with sql-server
+
 ## run sql-server
 
 - download docker sql-server image
@@ -17,7 +19,8 @@ docker run \
 -e 'ACCEPT_EULA=1' \
 -e 'MSSQL_SA_PASSWORD=sample@!2' \
 -e 'MSSQL_PID=Developer' \
--e 'MSSQL_USER=SA' mcr.microsoft.com/azure-sql-edge:latest
+-e 'MSSQL_USER=SA' \
+mcr.microsoft.com/azure-sql-edge:latest
 ```
 
 - docker compose sql-server-local
@@ -35,6 +38,11 @@ docker compose -f sql-server-local.yml up -d
 <img src="./images/image-sql-server-connection.png" width="600">
 
 ## azure devops
+
+## sql database project
+
+- sql-database-project is a declarative, local representation of your database schema
+- review the following steps [sql-database-project](./script-sql/README.md)
 
 - check pipeline and deploy
 
